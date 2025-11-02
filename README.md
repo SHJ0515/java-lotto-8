@@ -2,6 +2,11 @@
 
 ## 프로젝트 구조
 
+- controller : LottoController
+- domain : Lotto, LottoRank(enum)
+- validator : InputValidator
+- view : InputView, OutputView
+
 ## 프로젝트 흐름도
 
 ## 구현할 기능 목록
