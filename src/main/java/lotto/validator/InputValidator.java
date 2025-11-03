@@ -10,6 +10,9 @@ public class InputValidator {
     private final static int LOTTO_MAX_NUMBER = 45;
     private final static int LOTTO_SIZE = 6;
 
+    private InputValidator() {
+    }
+
     //구매 금액 검증
     public static int validatePurchaseAmount(String input) {
         validateEmpty(input);
