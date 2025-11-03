@@ -3,8 +3,10 @@ package lotto.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LottoTest {
@@ -22,4 +24,19 @@ class LottoTest {
     }
 
     // TODO: 추가 기능 구현에 따른 테스트 코드 작성
+
+    @DisplayName("입력된 번호 오름차순 정렬 테스트")
+    @Test
+    void sortLotto(){
+        // given
+        List<Integer> numbers = new ArrayList<>(List.of(6, 5, 4, 3, 2, 1));
+
+        List<Integer> predictResult =  new ArrayList<>(List.of(1, 2, 3, 4, 5, 6));
+
+        // when
+        Lotto lotto = new Lotto(numbers);
+
+        // then
+        assertThat(lotto.getNumbers()).isEqualTo(predictResult);
+    }
 }
