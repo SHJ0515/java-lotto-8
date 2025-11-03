@@ -33,7 +33,8 @@ public class LottoService {
 
         for (Lotto lotto : lottos) {
             LottoRank rank = findLottoRank(lotto, winningNumbers, bonusNumber);
-            result.put(rank, result.get(rank) + 1);
+            int currentCount = result.getOrDefault(rank, 0);
+            result.put(rank, currentCount + 1);
         }
 
         return result;
