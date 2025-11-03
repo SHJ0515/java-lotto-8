@@ -23,23 +23,24 @@ public class LottoController {
     }
 
     public void run() {
-        try {
-            int purchaseAmount = getPurchaseAmount();
-            List<Lotto> lottos = generateAndPrintLottos(purchaseAmount);
+        int purchaseAmount = getPurchaseAmount();
+        List<Lotto> lottos = generateAndPrintLottos(purchaseAmount);
 
-            List<Integer> winningNumbers = getWinningNumbers();
-            int bonusNumber = getBonusNumber(winningNumbers);
+        List<Integer> winningNumbers = getWinningNumbers();
+        int bonusNumber = getBonusNumber(winningNumbers);
 
-            printResult(lottos, winningNumbers, bonusNumber, purchaseAmount);
-
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-        }
+        printResult(lottos, winningNumbers, bonusNumber, purchaseAmount);
     }
 
     private int getPurchaseAmount() {
-        String input = inputView.inputPurchaseAmount();
-        return InputValidator.validatePurchaseAmount(input);
+        while (true) {
+            try {
+                String input = inputView.inputPurchaseAmount();
+                return InputValidator.validatePurchaseAmount(input);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     private List<Lotto> generateAndPrintLottos(int purchaseAmount) {
@@ -49,13 +50,25 @@ public class LottoController {
     }
 
     private List<Integer> getWinningNumbers() {
-        String input = inputView.inputLottoNumber();
-        return InputValidator.validateLottoNumbers(input);
+        while (true) {
+            try {
+                String input = inputView.inputLottoNumber();
+                return InputValidator.validateLottoNumbers(input);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     private int getBonusNumber(List<Integer> winningNumbers) {
-        String input = inputView.inputBonusNumber();
-        return InputValidator.validateBonusNumber(input, winningNumbers);
+        while (true) {
+            try {
+                String input = inputView.inputBonusNumber();
+                return InputValidator.validateBonusNumber(input, winningNumbers);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     private void printResult(List<Lotto> lottos, List<Integer> winningNumbers,
