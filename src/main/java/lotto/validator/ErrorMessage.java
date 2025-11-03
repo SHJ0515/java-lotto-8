@@ -3,6 +3,7 @@ package lotto.validator;
 public enum ErrorMessage {
     EMPTY_INPUT("[ERROR] 공백만 입력할 수 없습니다"),
     INVALID_PURCHASE_AMOUNT("[ERROR] 구입 금액은 1,000원 단위 숫자여야 합니다."),
+    PRICE_LIMIT("[ERROR] 로또는 최대 10만원까지 구매 가능합니다."),
     INVALID_NUMBER_FORMAT("[ERROR] 구입 금액 및 로또 번호는 숫자여야 합니다."),
     INVALID_NUMBER_RANGE("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다."),
     DUPLICATE_NUMBER("[ERROR] 로또 번호는 중복될 수 없습니다."),

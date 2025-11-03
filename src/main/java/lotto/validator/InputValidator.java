@@ -6,6 +6,7 @@ public class InputValidator {
 
     private final static String DELIMITER = ",";
     private final static int LOTTO_PRICE_UNIT = 1000;
+    private final static int LOTTO_MAX_AMOUNT = 100000;
     private final static int LOTTO_MIN_NUMBER = 1;
     private final static int LOTTO_MAX_NUMBER = 45;
     private final static int LOTTO_SIZE = 6;
@@ -19,6 +20,9 @@ public class InputValidator {
         int amount = validateNumeric(input);
         if (amount <= 0 || amount % LOTTO_PRICE_UNIT != 0) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_AMOUNT.getMessage());
+        }
+        if (amount > LOTTO_MAX_AMOUNT){
+            throw new IllegalArgumentException(ErrorMessage.PRICE_LIMIT.getMessage());
         }
         return amount;
     }
