@@ -37,7 +37,8 @@ public class OutputView {
     }
 
     public void printProfitRate(double profitRate) {
-        System.out.println(String.format(PROFIT_RATE_FORMAT, profitRate));
+        double roundedRate = Math.round(profitRate * 10) / 10.0;
+        System.out.println(String.format(PROFIT_RATE_FORMAT, roundedRate));
     }
 
     private void printRankResult(LottoRank rank, int count) {
