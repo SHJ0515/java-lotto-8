@@ -11,7 +11,7 @@ public class InputValidator {
     private final static int LOTTO_SIZE = 6;
 
     //구매 금액 검증
-    public int validatePurchaseAmount(String input) {
+    public static int validatePurchaseAmount(String input) {
         validateEmpty(input);
         int amount = validateNumeric(input);
         if (amount % LOTTO_PRICE_UNIT != 0) {
@@ -21,7 +21,7 @@ public class InputValidator {
     }
 
     //입력 당첨 번호 검증
-    public List<Integer> validateLottoNumbers(String input) {
+    public static List<Integer> validateLottoNumbers(String input) {
         validateEmpty(input);
         validateDelimiterLocation(input);
         validateDelimiterContinuous(input);
@@ -37,7 +37,7 @@ public class InputValidator {
     }
 
     //입력 보너스 번호 검증
-    public int validateBonusNumber(String input, List<Integer> winningNumbers) {
+    public static int validateBonusNumber(String input, List<Integer> winningNumbers) {
         validateEmpty(input);
         int bonusNumber = validateNumeric(input);
         validateNumberRange(List.of(bonusNumber));
@@ -49,13 +49,13 @@ public class InputValidator {
         return bonusNumber;
     }
 
-    private void validateEmpty(String input) {
+    private static void validateEmpty(String input) {
         if (input == null || input.trim().isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.EMPTY_INPUT.getMessage());
         }
     }
 
-    private int validateNumeric(String input) {
+    private static int validateNumeric(String input) {
         try {
             return Integer.parseInt(input.trim());
         } catch (NumberFormatException e) {
@@ -63,31 +63,36 @@ public class InputValidator {
         }
     }
 
-    private List<Integer> parseNumbers(String[] tokens) {
+    private static List<Integer> parseNumbers(String[] tokens) {
         List<Integer> numbers = new ArrayList<>();
 
         for (String token : tokens) {
             String trimmedToken = token.trim();
-            int number = this.validateNumeric(trimmedToken);
+
+            if (trimmedToken.isEmpty()) {
+                throw new IllegalArgumentException(ErrorMessage.CONTINUOUS_DELIMITER.getMessage());
+            }
+
+            int number = validateNumeric(trimmedToken);
             numbers.add(number);
         }
         return numbers;
     }
 
-    private void validateLottoSize(List<Integer> numbers) {
+    private static void validateLottoSize(List<Integer> numbers) {
         if (numbers.size() != LOTTO_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_SIZE.getMessage());
         }
     }
 
-    private void validateDuplicate(List<Integer> numbers) {
+    private static void validateDuplicate(List<Integer> numbers) {
         Set<Integer> uniqueNumbers = new HashSet<>(numbers);
         if (uniqueNumbers.size() != numbers.size()) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NUMBER.getMessage());
         }
     }
 
-    private void validateNumberRange(List<Integer> numbers) {
+    private static void validateNumberRange(List<Integer> numbers) {
         for (int number : numbers) {
             if (number < LOTTO_MIN_NUMBER || number > LOTTO_MAX_NUMBER) {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_RANGE.getMessage());
@@ -95,7 +100,7 @@ public class InputValidator {
         }
     }
 
-    private void validateDelimiterLocation(String input) {
+    private static void validateDelimiterLocation(String input) {
         String trimmedInput = input.trim();
 
         if (trimmedInput.startsWith(DELIMITER)) {
@@ -107,7 +112,7 @@ public class InputValidator {
         }
     }
 
-    private void validateDelimiterContinuous(String input) {
+    private static void validateDelimiterContinuous(String input) {
         String delimiterPattern = DELIMITER + DELIMITER;
 
         if (input.contains(delimiterPattern)) {

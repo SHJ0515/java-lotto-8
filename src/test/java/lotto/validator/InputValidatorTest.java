@@ -12,17 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InputValidatorTest {
-    private InputValidator inputValidator;
-
-    @BeforeEach
-    void setUp() {
-        inputValidator = new InputValidator();
-    }
 
     @DisplayName("구매 금액 검증: 정상 입력")
     @Test
     void 구매_금액_정상_입력() {
-        int result = inputValidator.validatePurchaseAmount("8000");
+        int result = InputValidator.validatePurchaseAmount("8000");
         assertThat(result).isEqualTo(8000);
     }
 
@@ -30,7 +24,7 @@ class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"1500", "2200", "999", "10001"})
     void 구매_금액이_1000원_단위가_아니면_예외_발생(String input) {
-        assertThatThrownBy(() -> inputValidator.validatePurchaseAmount(input))
+        assertThatThrownBy(() -> InputValidator.validatePurchaseAmount(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_PURCHASE_AMOUNT.getMessage());
     }
@@ -39,7 +33,7 @@ class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"1000j", "abc", "1000원", "천원"})
     void 구매_금액이_숫자가_아니면_예외_발생(String input) {
-        assertThatThrownBy(() -> inputValidator.validatePurchaseAmount(input))
+        assertThatThrownBy(() -> InputValidator.validatePurchaseAmount(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_NUMBER_FORMAT.getMessage());
     }
@@ -48,7 +42,7 @@ class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "   ", "  "})
     void 구매_금액이_빈_입력이면_예외_발생(String input) {
-        assertThatThrownBy(() -> inputValidator.validatePurchaseAmount(input))
+        assertThatThrownBy(() -> InputValidator.validatePurchaseAmount(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.EMPTY_INPUT.getMessage());
     }
@@ -56,7 +50,7 @@ class InputValidatorTest {
     @DisplayName("당첨 번호 검증: 정상 입력")
     @Test
     void 당첨_번호_정상_입력() {
-        List<Integer> result = inputValidator.validateLottoNumbers("1,2,3,4,5,6");
+        List<Integer> result = InputValidator.validateLottoNumbers("1,2,3,4,5,6");
         assertThat(result).containsExactly(1, 2, 3, 4, 5, 6);
     }
 
@@ -64,7 +58,7 @@ class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"1,2,3,4,5", "1,2,3,4,5,6,7", "1,2,3"})
     void 당첨_번호가_6개가_아니면_예외_발생(String input) {
-        assertThatThrownBy(() -> inputValidator.validateLottoNumbers(input))
+        assertThatThrownBy(() -> InputValidator.validateLottoNumbers(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_LOTTO_SIZE.getMessage());
     }
@@ -72,7 +66,7 @@ class InputValidatorTest {
     @DisplayName("당첨 번호 검증: 중복된 숫자가 있으면 예외 발생")
     @Test
     void 당첨_번호에_중복된_숫자가_있으면_예외_발생() {
-        assertThatThrownBy(() -> inputValidator.validateLottoNumbers("1,2,3,4,5,5"))
+        assertThatThrownBy(() -> InputValidator.validateLottoNumbers("1,2,3,4,5,5"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.DUPLICATE_NUMBER.getMessage());
     }
@@ -81,7 +75,7 @@ class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"0,1,2,3,4,5", "1,2,3,4,5,46", "-1,2,3,4,5,6"})
     void 당첨_번호가_범위를_벗어나면_예외_발생(String input) {
-        assertThatThrownBy(() -> inputValidator.validateLottoNumbers(input))
+        assertThatThrownBy(() -> InputValidator.validateLottoNumbers(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_NUMBER_RANGE.getMessage());
     }
@@ -89,7 +83,7 @@ class InputValidatorTest {
     @DisplayName("당첨 번호 검증: 구분자가 맨 앞에 있으면 예외 발생")
     @Test
     void 구분자가_맨_앞에_있으면_예외_발생() {
-        assertThatThrownBy(() -> inputValidator.validateLottoNumbers(",1,2,3,4,5,6"))
+        assertThatThrownBy(() -> InputValidator.validateLottoNumbers(",1,2,3,4,5,6"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_DELIMITER_LOCATION.getMessage());
     }
@@ -97,7 +91,7 @@ class InputValidatorTest {
     @DisplayName("당첨 번호 검증: 구분자가 맨 뒤에 있으면 예외 발생")
     @Test
     void 구분자가_맨_뒤에_있으면_예외_발생() {
-        assertThatThrownBy(() -> inputValidator.validateLottoNumbers("1,2,3,4,5,6,"))
+        assertThatThrownBy(() -> InputValidator.validateLottoNumbers("1,2,3,4,5,6,"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_DELIMITER_LOCATION.getMessage());
     }
@@ -106,7 +100,7 @@ class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"1,,2,3,4,5,6", "1,2,,3,4,5,6", "1,2,3,4,5,,6"})
     void 연속된_구분자가_있으면_예외_발생(String input) {
-        assertThatThrownBy(() -> inputValidator.validateLottoNumbers(input))
+        assertThatThrownBy(() -> InputValidator.validateLottoNumbers(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.CONTINUOUS_DELIMITER.getMessage());
     }
@@ -115,7 +109,7 @@ class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"1,2,3,4,5,a", "일,2,3,4,5,6", "1,2.5,3,4,5,6"})
     void 숫자가_아닌_값이_있으면_예외_발생(String input) {
-        assertThatThrownBy(() -> inputValidator.validateLottoNumbers(input))
+        assertThatThrownBy(() -> InputValidator.validateLottoNumbers(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_NUMBER_FORMAT.getMessage());
     }
@@ -124,7 +118,7 @@ class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "   "})
     void 당첨_번호가_빈_입력이면_예외_발생(String input) {
-        assertThatThrownBy(() -> inputValidator.validateLottoNumbers(input))
+        assertThatThrownBy(() -> InputValidator.validateLottoNumbers(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.EMPTY_INPUT.getMessage());
     }
@@ -133,7 +127,7 @@ class InputValidatorTest {
     @Test
     void 보너스_번호_정상_입력() {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        int result = inputValidator.validateBonusNumber("7", winningNumbers);
+        int result = InputValidator.validateBonusNumber("7", winningNumbers);
         assertThat(result).isEqualTo(7);
     }
 
@@ -141,7 +135,7 @@ class InputValidatorTest {
     @Test
     void 보너스_번호가_당첨_번호와_중복되면_예외_발생() {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        assertThatThrownBy(() -> inputValidator.validateBonusNumber("6", winningNumbers))
+        assertThatThrownBy(() -> InputValidator.validateBonusNumber("6", winningNumbers))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.BONUS_NUMBER_DUPLICATE.getMessage());
     }
@@ -151,7 +145,7 @@ class InputValidatorTest {
     @ValueSource(strings = {"0", "46", "-1", "100"})
     void 보너스_번호가_범위를_벗어나면_예외_발생(String input) {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        assertThatThrownBy(() -> inputValidator.validateBonusNumber(input, winningNumbers))
+        assertThatThrownBy(() -> InputValidator.validateBonusNumber(input, winningNumbers))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_NUMBER_RANGE.getMessage());
     }
@@ -161,7 +155,7 @@ class InputValidatorTest {
     @ValueSource(strings = {"a", "칠", "7.5"})
     void 보너스_번호가_숫자가_아니면_예외_발생(String input) {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        assertThatThrownBy(() -> inputValidator.validateBonusNumber(input, winningNumbers))
+        assertThatThrownBy(() -> InputValidator.validateBonusNumber(input, winningNumbers))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_NUMBER_FORMAT.getMessage());
     }
@@ -171,7 +165,7 @@ class InputValidatorTest {
     @ValueSource(strings = {"", "   "})
     void 보너스_번호가_빈_입력이면_예외_발생(String input) {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-        assertThatThrownBy(() -> inputValidator.validateBonusNumber(input, winningNumbers))
+        assertThatThrownBy(() -> InputValidator.validateBonusNumber(input, winningNumbers))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.EMPTY_INPUT.getMessage());
     }
