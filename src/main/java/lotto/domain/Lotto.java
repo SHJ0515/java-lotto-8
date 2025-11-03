@@ -23,4 +23,23 @@ public class Lotto {
     private void sortLotto() {
         numbers.sort(Comparator.naturalOrder());
     }
+
+    public List<Integer> getNumbers() {
+        return numbers;
+    }
+
+    public int countMatchingNumbers(List<Integer> winningNumbers) {
+        int count = 0;
+        for (int number : numbers) {
+            if (winningNumbers.contains(number)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public boolean containsBonusNumber(int number) {
+        return numbers.contains(number);
+    }
+
 }
