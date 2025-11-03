@@ -16,6 +16,10 @@ public class OutputView {
     private static final String SECOND_RANK = "%d개 일치, 보너스 볼 일치 (%s원)";
     private static final String OTHER_RANK = "%d개 일치 (%s원)";
 
+    public void printErrorMessage(String message) {
+        System.out.println(message);
+    }
+
     public void printPurchaseInfo(List<Lotto> lottos) {
         System.out.println(String.format(PURCHASE_INFO, lottos.size()));
         for (Lotto lotto : lottos) {
