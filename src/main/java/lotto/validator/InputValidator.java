@@ -17,7 +17,7 @@ public class InputValidator {
     public static int validatePurchaseAmount(String input) {
         validateEmpty(input);
         int amount = validateNumeric(input);
-        if (amount % LOTTO_PRICE_UNIT != 0) {
+        if (amount <= 0 || amount % LOTTO_PRICE_UNIT != 0) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_AMOUNT.getMessage());
         }
         return amount;
