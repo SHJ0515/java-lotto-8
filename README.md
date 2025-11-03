@@ -4,10 +4,19 @@
 
 - controller : LottoController
 - domain : Lotto, LottoRank(enum)
-- validator : InputValidator
+- service : LottoService
+- validator : InputValidator, ErrorMessage(enum)
 - view : InputView, OutputView
 
 ## 프로젝트 흐름도
+
+1. 프로그램 시작 : LottoController 생성 및 run 실행
+2. 구입 금액 입력 : 구입금액 입력 -> 유효성 검증 -> 실패시 에러메시지 출력 후 재입력 -> 성공 시 int형 변환 후 저장
+3. 로또 생성 및 출력 : 구입금액만큼 로또 생성 -> 생성된 로또 오름차순 정렬 -> 번호 출력
+4. 당첨 번호 입력 : 당첨 번호 입력 -> 유효성 검증 -> 실패시 에러메시지 출력 후 재입력
+5. 보너스 번호 입력 : 보너스 번호 입력 -> 유효성 검증 -> 실패시 에러메시지 출력 후 재입력
+6. 당첨결과 확인 : 당첨 통계 출력 -> 총 상금 계산 후 구입금액에 따라 수익률 계산 후 출력
+7. 프로그램 정상 종료 : run()메소드 종료 후 applicaiton 종료
 
 ## 구현할 기능 목록
 
