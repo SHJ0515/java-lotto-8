@@ -53,7 +53,7 @@ public class OutputView {
         return String.format(OTHER_RANK, rank.getMatchCount(), formatPrize(rank.getReceiveAmount()));
     }
 
-    private String formatPrize(int prize) {
+    private String formatPrize(long prize) {
         return String.format("%,d", prize);
     }
 

@@ -55,9 +55,9 @@ public class LottoService {
     private long calculateTotalPrize(Map<LottoRank, Integer> result) {
         long totalPrize = 0L;
         for (Map.Entry<LottoRank, Integer> entry : result.entrySet()) {
-            int receiveAmount = entry.getKey().getReceiveAmount();
+            long receiveAmount = entry.getKey().getReceiveAmount();
             int count = entry.getValue();
-            totalPrize += (long) receiveAmount * count;
+            totalPrize +=  receiveAmount * count;
         }
         return totalPrize;
     }

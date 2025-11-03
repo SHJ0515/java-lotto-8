@@ -2,18 +2,18 @@ package lotto.domain;
 
 public enum LottoRank {
 
-    FIRST(6, false, 2_000_000_000),
-    SECOND(5, true, 30_000_000),
-    THIRD(5, false, 1_500_000),
-    FOURTH(4, false, 50_000),
-    FIFTH(3, false, 5_000),
-    UNRANKED(0, false, 0);
+    FIRST(6, false, 2_000_000_000L),
+    SECOND(5, true, 30_000_000L),
+    THIRD(5, false, 1_500_000L),
+    FOURTH(4, false, 50_000L),
+    FIFTH(3, false, 5_000L),
+    UNRANKED(0, false, 0L);
 
     private final int matchCount;
     private final boolean requireBonusMatch;
-    private final int receiveAmount;
+    private final long receiveAmount;
 
-    LottoRank(int matchCount, boolean requireBonusMatch, int receiveAmount) {
+    LottoRank(int matchCount, boolean requireBonusMatch, long receiveAmount) {
         this.matchCount = matchCount;
         this.requireBonusMatch = requireBonusMatch;
         this.receiveAmount = receiveAmount;
@@ -46,7 +46,7 @@ public enum LottoRank {
         return requireBonusMatch;
     }
 
-    public int getReceiveAmount() {
+    public long getReceiveAmount() {
         return receiveAmount;
     }
 }
