@@ -29,11 +29,11 @@ public class LottoService {
 
     //구매한 로또들의 당첨 결과 체크
     public Map<LottoRank, Integer> checkRanking(List<Lotto> lottos, List<Integer> winningNumbers, int bonusNumber) {
-        Map<LottoRank, Integer> result = new HashMap<>();
+        Map<LottoRank, Integer> result = initializeResult();
 
         for (Lotto lotto : lottos) {
             LottoRank rank = findLottoRank(lotto, winningNumbers, bonusNumber);
-            int currentCount = result.getOrDefault(rank, 0);
+            int currentCount = result.get(rank);
             result.put(rank, currentCount + 1);
         }
 
@@ -60,5 +60,16 @@ public class LottoService {
             totalPrize += (long) receiveAmount * count;
         }
         return totalPrize;
+    }
+
+    private Map<LottoRank, Integer> initializeResult() {
+        Map<LottoRank, Integer> result = new HashMap<>();
+        result.put(LottoRank.FIFTH, 0);
+        result.put(LottoRank.FOURTH, 0);
+        result.put(LottoRank.THIRD, 0);
+        result.put(LottoRank.SECOND, 0);
+        result.put(LottoRank.FIRST, 0);
+        result.put(LottoRank.UNRANKED, 0);
+        return result;
     }
 }
