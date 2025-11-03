@@ -50,6 +50,7 @@ public class LottoController {
     }
 
     private List<Integer> getWinningNumbers() {
+        System.out.println();
         while (true) {
             try {
                 String input = inputView.inputLottoNumber();
@@ -61,6 +62,7 @@ public class LottoController {
     }
 
     private int getBonusNumber(List<Integer> winningNumbers) {
+        System.out.println();
         while (true) {
             try {
                 String input = inputView.inputBonusNumber();
